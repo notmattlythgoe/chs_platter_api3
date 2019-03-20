@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "iif.th.chsplatter.chsplatter_apiv3.App",
+            "projectName": "chsplatter_apiv3",
+            "console": "externalTerminal"
+        }
+    ]
+}

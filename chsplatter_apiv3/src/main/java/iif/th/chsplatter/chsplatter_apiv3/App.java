@@ -23,14 +23,9 @@ import net.thefletcher.tbaapi.v3client.model.EliminationAlliance;
 import net.thefletcher.tbaapi.v3client.model.Event;
 import net.thefletcher.tbaapi.v3client.model.Team;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-	public static void main( String[] args )
-	{
+public class App {
+	
+	public static void main(String... args) {
 		ApiClient defaultClient = Configuration.getDefaultApiClient();
 
 		// Configure API key authorization: apiKey
@@ -66,7 +61,7 @@ public class App
 			
 			System.out.println("Delimiter: ");
 			String delimiter = br.readLine();
-			Map<String, List<EliminationAlliance>> fetchedEvents = new HashMap<>();
+			Map<String, List<EliminationAlliance>> fetchedEvents = new HashMap<String, List<EliminationAlliance>>();
 			try {
 				for (Team team : teams) {
 					double numEvents = 0;
@@ -83,23 +78,23 @@ public class App
 										alliances = eventApi.getEventAlliances(event.getKey(), null);
 										fetchedEvents.put(event.getKey(), alliances);
 								}
-								numEvents++;
+								numEvents += yearsToAverage - i;
 								for (int a = 0; a < 8; a++) {
 									EliminationAlliance alliance = alliances.get(a);
 									for (int p = 0; p < 3; p++) {
 										String pick = alliance.getPicks().get(p);
 										if (pick.equals(team.getKey())) {
 											if (p < 2) {
-												numPoints += 16 - a;
+												numPoints += (16 - a) * (yearsToAverage - i);
 											} else {
-												numPoints += a + 1;
+												numPoints += (a + 1) * (yearsToAverage - i);
 											}
 											if ("won".equals(alliance.getStatus().getStatus())) {
-												numPoints += 9;
+												numPoints += 9  * (yearsToAverage - i);
 											} else if ("f".equals(alliance.getStatus().getLevel())) {
 												numPoints += 6;
 											} else if ("sf".equals(alliance.getStatus().getLevel())) {
-												numPoints += 3;
+												numPoints += 3  * (yearsToAverage - i);
 											} 
 										}
 									}
@@ -125,7 +120,7 @@ public class App
 	}
 	
 	private static List<Team> importTeamList(BufferedReader br, TeamApi teamApi) throws IOException, ApiException {
-		List<Team> teams = new ArrayList<>();
+		List<Team> teams = new ArrayList<Team>();
 		String team;
 		do { 
 			team = br.readLine();
